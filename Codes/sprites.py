@@ -21,8 +21,8 @@ class Block(pygame.sprite.Sprite):
     def __init__(self, color, width, height):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface([width, height])
-        self.image.fill(config.white)
-        self.image.set_colorkey(config.white)
+        self.image.fill(config.WHITE)
+        self.image.set_colorkey(config.WHITE)
         pygame.draw.ellipse(self.image, color, [0, 0, width, height])
         self.rect = self.image.get_rect()
 

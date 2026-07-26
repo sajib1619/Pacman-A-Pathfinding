@@ -20,7 +20,7 @@ pygame.init()
 screen = pygame.display.set_mode(config.SCREEN_SIZE)
 pygame.display.set_caption('Pacman - A* AI v7 (Ghost Wall Safety)')
 background = pygame.Surface(screen.get_size()).convert()
-background.fill(config.black)
+background.fill(config.BLACK)
 clock = pygame.time.Clock()
 
 pygame.font.init()

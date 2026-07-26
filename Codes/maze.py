@@ -24,7 +24,7 @@ def setupRoomOne(all_sprites_list):
         [120, 540, 126, 6], [360, 540, 126, 6],
     ]
     for item in walls:
-        wall = Wall(item[0], item[1], item[2], item[3], config.blue)
+        wall = Wall(item[0], item[1], item[2], item[3], config.BLUE)
         wall_list.add(wall)
         all_sprites_list.add(wall)
     return wall_list
@@ -32,6 +32,6 @@ def setupRoomOne(all_sprites_list):
 
 def setupGate(all_sprites_list):
     gate = pygame.sprite.RenderPlain()
-    gate.add(Wall(282, 242, 42, 2, config.white))
+    gate.add(Wall(282, 242, 42, 2, config.WHITE))
     all_sprites_list.add(gate)
     return gate

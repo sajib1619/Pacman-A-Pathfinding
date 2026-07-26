@@ -22,7 +22,13 @@ from .ghost_tables import (
     pl, bl, il, cl,
 )
 
-w, p_h, m_h, b_h, i_w, c_w = config.w, config.p_h, config.m_h, config.b_h, config.i_w, config.c_w
+GRID_ORIGIN_X = config.GRID_ORIGIN_X
+PACMAN_START_Y = config.PACMAN_START_Y
+MONSTER_START_Y = config.MONSTER_START_Y
+BLINKY_START_Y = config.BLINKY_START_Y
+INKY_START_X = config.INKY_START_X
+CLYDE_START_X = config.CLYDE_START_X
+
 STEP = config.STEP
 LOOKAHEAD_TICKS = config.LOOKAHEAD_TICKS
 THREAT_NEAR = config.THREAT_NEAR
@@ -47,20 +53,20 @@ def startGame():
     i_turn = i_steps = 0
     c_turn = c_steps = 0
 
-    Pacman = Player(w, p_h, "images/Trollman.png")
+    Pacman = Player(GRID_ORIGIN_X, PACMAN_START_Y, "images/Trollman.png")
     all_sprites_list.add(Pacman)
     pacman_collide.add(Pacman)
 
-    Blinky = Ghost(w, b_h, "images/Blinky.png"); monsta_list.add(Blinky); all_sprites_list.add(Blinky)
-    Pinky  = Ghost(w, m_h, "images/Pinky.png");  monsta_list.add(Pinky);  all_sprites_list.add(Pinky)
-    Inky   = Ghost(i_w, m_h, "images/Inky.png"); monsta_list.add(Inky);   all_sprites_list.add(Inky)
-    Clyde  = Ghost(c_w, m_h, "images/Clyde.png"); monsta_list.add(Clyde); all_sprites_list.add(Clyde)
+    Blinky = Ghost(GRID_ORIGIN_X, BLINKY_START_Y, "images/Blinky.png"); monsta_list.add(Blinky); all_sprites_list.add(Blinky)
+    Pinky  = Ghost(GRID_ORIGIN_X, MONSTER_START_Y, "images/Pinky.png");  monsta_list.add(Pinky);  all_sprites_list.add(Pinky)
+    Inky   = Ghost(INKY_START_X, MONSTER_START_Y, "images/Inky.png"); monsta_list.add(Inky);   all_sprites_list.add(Inky)
+    Clyde  = Ghost(CLYDE_START_X, MONSTER_START_Y, "images/Clyde.png"); monsta_list.add(Clyde); all_sprites_list.add(Clyde)
 
     for row in range(19):
         for column in range(19):
             if (row == 7 or row == 8) and (column in (8, 9, 10)):
                 continue
-            block = Block(config.yellow, 4, 4)
+            block = Block(config.YELLOW, 4, 4)
             block.rect.x = (30 * column + 6) + 26
             block.rect.y = (30 * row + 6) + 26
             if pygame.sprite.spritecollide(block, wall_list, False):
@@ -180,7 +186,7 @@ def startGame():
             score += len(blocks_hit_list)
 
         # ---- Draw ----
-        screen.fill(config.black)
+        screen.fill(config.BLACK)
         wall_list.draw(screen)
         gate.draw(screen)
         all_sprites_list.draw(screen)
@@ -205,18 +211,18 @@ def startGame():
         for line in ghost_timelines:
             for cell in line[1:LOOKAHEAD_TICKS + 1]:
                 if cell in walkable:
-                    pygame.draw.circle(screen, config.purple, (cell[0] + 15, cell[1] + 15), 4)
+                    pygame.draw.circle(screen, config.PURPLE, (cell[0] + 15, cell[1] + 15), 4)
 
-        text = font.render(f"Score: {score}/{bll}", True, config.red)
+        text = font.render(f"Score: {score}/{bll}", True, config.RED)
         screen.blit(text, [10, 10])
 
-        color = config.red if mode == "EMERGENCY" or mode.startswith("TRAPPED") else (
-            config.orange if mode.startswith(("ESCAPE", "AVOID-TRAP", "GHOST-WALL")) else config.yellow)
+        color = config.RED if mode == "EMERGENCY" or mode.startswith("TRAPPED") else (
+            config.ORANGE if mode.startswith(("ESCAPE", "AVOID-TRAP", "GHOST-WALL")) else config.YELLOW)
         move_text = font.render(f"{mode}: {last_move}  safe={safe_count}", True, color)
         screen.blit(move_text, [330, 10])
 
-        threat_color = config.red if threat_level == "HIGH" else (
-            config.orange if threat_level == "MED" else config.yellow)
+        threat_color = config.RED if threat_level == "HIGH" else (
+            config.ORANGE if threat_level == "MED" else config.YELLOW)
         threat_text = small_font.render(
             f"threat={threat_level}  pellet_bonus={pellet_bonus:+.1f}",
             True, threat_color)
@@ -224,16 +230,16 @@ def startGame():
 
         wall_text = small_font.render(
             f"ghost-wall on  alive_horizon={alive_horizon}  reserved_blocked={reserved_blocked}",
-            True, config.white)
+            True, config.WHITE)
         screen.blit(wall_text, [330, 58])
 
-        v7_text = small_font.render("fc-desync-fix on  swap-guard on", True, config.white)
+        v7_text = small_font.render("fc-desync-fix on  swap-guard on", True, config.WHITE)
         screen.blit(v7_text, [330, 76])
 
         hint = small_font.render(
             f"radius={DANGER_RADIUS}  real-lookahead={LOOKAHEAD_TICKS}t  "
             f"choke={CHOKE_PENALTY:.0f}  rollout={ROLLOUT_DEPTH}",
-            True, config.white)
+            True, config.WHITE)
         screen.blit(hint, [10, 588])
 
         if score == bll:
@@ -269,11 +275,11 @@ def doNext(message, left, all_sprites_list, block_list, monsta_list,
         w2.fill((128, 128, 128))
         screen.blit(w2, (100, 200))
 
-        text1 = font.render(message, True, config.white)
+        text1 = font.render(message, True, config.WHITE)
         screen.blit(text1, [left, 233])
-        text2 = font.render("To play again, press ENTER.", True, config.white)
+        text2 = font.render("To play again, press ENTER.", True, config.WHITE)
         screen.blit(text2, [135, 303])
-        text3 = font.render("To quit, press ESCAPE.", True, config.white)
+        text3 = font.render("To quit, press ESCAPE.", True, config.WHITE)
         screen.blit(text3, [165, 333])
 
         pygame.display.flip()
