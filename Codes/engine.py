@@ -13,12 +13,12 @@ pygame.mixer.init()
 try:
     pygame.mixer.music.load('pacman.mp3')
     pygame.mixer.music.play(-1, 0.0)
-except pygame.error:
-    pass
+except pygame.error as error:
+    print(f"Music could not be loaded: {error}")
 
 pygame.init()
 screen = pygame.display.set_mode(config.SCREEN_SIZE)
-pygame.display.set_caption('Pacman - A* AI v7 (Ghost Wall Safety)')
+pygame.display.set_caption('Pacman - A* Pathfinding')
 background = pygame.Surface(screen.get_size()).convert()
 background.fill(config.BLACK)
 clock = pygame.time.Clock()
