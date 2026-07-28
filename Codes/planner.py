@@ -213,7 +213,6 @@ def score_candidate(first, pac_cell, goals, walkable, fear, ghost_by_time,
 
     return (score, mode, best_safe, pellet_bonus, alive_horizon, reserved_blocked)
 
-
 def choose_safest_move(pac_cell, goals, walkable, fear, hard_block, ghost_timelines,
                        pockets, recent_positions=None):
     options = [n for n in neighbors(pac_cell, walkable) if n not in hard_block]
