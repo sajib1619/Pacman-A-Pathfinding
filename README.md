@@ -75,7 +75,7 @@ pip install pygame
 
 ### Assets
 
-Place these next to `main.py` (not included in this repo):
+Place these next to `main.py` (included in this repo):
 
 ```
 images/
@@ -121,6 +121,3 @@ very conservatively.
 - Base game (maze, sprites, ghost movement tables): [hbokmann/Pacman](https://github.com/hbokmann/Pacman)
 - A* ghost-aware AI, fear field, choke-point/pocket safety planner: this project
 
-## License
-
-Add a license of your choice here (e.g. MIT) — none is currently specified.
